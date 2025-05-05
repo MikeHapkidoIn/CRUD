@@ -17,10 +17,17 @@ let usuarios = [ //array de objetos
 app.get('/usuarios', (req,res) => {
   res.json(usuarios);
   console.log(req.params)
+  const usuario = usuarios.find(u => u.nombre.toLocaleLowerCase() === nombre.toLocaleLowerCase())
+
+  if (!usuario) {
+    res.status(404).json ({mensaje:'Luchador no encontrado'})
+  } else {
+    res.json (usuario)
+  }
 });
 
 
-app.post ('/usuarios', (req,res) =>{
+app.post ('/usuarios', (req,res) =>{  //
   const nuevoUsuario = {
     id: usuarios.length + 1,
     nombre: req.body.nombre,
@@ -34,11 +41,21 @@ app.post ('/usuarios', (req,res) =>{
 
 app.put('/usuarios/:nombre', (req, res) => {
     const nombre = req.params.nombre;
+    const usuarioIndex = usuarios.findIndex(u.nombre.toLowerCase() === u.nombre.toLowerCase())
+// si no existe el usuario nos da una ID -1
+    if (usuarioIndex === -1)
+      res.status(404).json ({mensaje: 'Luchador no encontrado'})
+  }else {
+    usuarios[usuarioIndex].edad = req.body.edad, 
+    usuarios[usuarioIndex].lugarProcedencia = req.body.lugarProcedencia
+    res.json(usuarios[usuarioIndex])
+  }
+});
     
 
 app.delete('/usuarios/:nombre', (req,res) => {
     const nombre = req.params.nombre;
-    usuarios = usuarios.filter (u => u.nombre !== nombre);
+    const usuarios = usuarios.filter (u => u.nombre !== nombre);
     res.json ({mensaje: 'Luchador eliminado'});
 });
   
@@ -46,6 +63,6 @@ app.delete('/usuarios/:nombre', (req,res) => {
 
 
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`Express esta escuchando en http://localhost:${port}`);
 });

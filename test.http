@@ -1,0 +1,26 @@
+GET http://localhost:3000/usuarios
+
+### 2- POST USUARIO
+POST http://localhost:3000/usuarios
+Content-Type: application/json
+
+{
+    "nombre": "Zangief",
+    "edad": 45,
+    "lugarProcedencia": "Rusia"
+}
+
+###3 - GET USUARIO
+GET http://localhost:3000/usuarios/Ryu
+
+###4 - PUT USUARIO
+
+PUT http://localhost:3000/usuarios/Ryu
+Content-Type: application/json
+
+{
+    "edad": 42,
+    "lugarProcedencia": "Rivas"
+}
+
+DELETE
